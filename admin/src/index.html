@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+		<meta charset="UTF-8">
+        <title>Solid Rain - Confidential</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+		<header>
+			<h1>Solid Rain <span class="xirod">Confidential</span></h1>
+		</header>
+
+		<section>
+			<h2><a name="mapScroll">Carte</a></h2>
+			<div id="msgSet" style="color:#ff0000;"></div>
+			<div id="map"></div>
+		</section>
+			<h2>ZRR</h2>
+			<div class="content">
+				<p>Appuyez sur "Set" pour sélectionner un point de la carte :</p>
+				<form id="setCorner1" class="pure-form">
+					<fieldset>
+						<input type="submit" value="Set" class="pure-button pure-button-active">&nbsp;&nbsp;
+						<label for="lat1">Lattitude : </label> <input type="text" id="lat1" name="lat1">&nbsp;&nbsp;
+						<label for="lon1">Longitude : </label> <input type="text" id="lon1" name="lon1">
+					</fieldset>
+				</form>
+				<form id="setCorner2" class="pure-form">
+					<fieldset>
+						<input type="submit" value="Set" class="pure-button pure-button-active">&nbsp;&nbsp;
+						<label for="lat2">Lattitude : </label> <input type="text" id="lat2" name="lat2">&nbsp;&nbsp;
+						<label for="lon2">Longitude : </label> <input type="text" id="lon2" name="lon2">
+					</fieldset>
+				</form>
+				<form id="sendZrr" class="pure-form">
+					<fieldset>
+						<label for="sendZrr">Valider la position de la ZRR : </label>&nbsp;&nbsp;
+						<input type="submit" name="sendZrr" value="Send" class="pure-button pure-button-active">
+					</fieldset>
+				</form>
+			</div>
+		</section>
+		<section>
+			<h2>Paramètres</h2>
+			<div class="content">
+				<form id="setTtl" class="pure-form">
+					<fieldset>
+						<label for="ttl">Temps de Tranquillité et de Liberté (TTL) par défaut : </label> <input type="number" min="0" id="ttl" value="60" name="ttl">&nbsp;&nbsp;
+						<input type="submit" name="setTtl" value="Set" class="pure-button pure-button-active">
+					</fieldset>
+				</form>
+				<form id="setMeteorType" class="pure-form">
+					<fieldset>
+						<label for="meteorType">Type de météorite : </label>
+						<select id="meteorType" name="meteorType" id="pet-select">
+						    <option value="Astra-Z" selected>Astra-Z</option>
+						    <option value="Astra-X">Astra-X</option>
+						    <option value="Bêta-X">Bêta-X</option>
+						</select>
+						<br>
+						<label>Passer en mode de déclenchement d'impact (démarre le jeu) : </label>
+						<input type="submit" id="createMeteorite" name="createMeteorite" value="Feu!" class="pure-button pure-button-active">
+						<button id="stopGame" name="stopGame" class="pure-button pure-button-active">Arrêter le jeu</button>
+					</fieldset>
+				</form>
+			</div>
+		</section>
+		<section>
+			<h2>Utilisateurs</h2>
+			<div class="content">
+				<form id="addUser" class="pure-form">
+					<fieldset>
+						<select id="usersList"></select>
+						<input type="submit" name="addUser" value="Add player" class="pure-button pure-button-active">
+					</fieldset>
+				</form>
+				<ul id="playersList">
+					<li>
+						<a href="javascript:updateImage('Toto');">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Pediculus_humanus_var_capitis.jpg/800px-Pediculus_humanus_var_capitis.jpg?uselang=fr" alt="Pediculus humanus var capitis AKA head louse; public domain from http://phil.cdc.gov/" class="icon">
+						</a>&nbsp;&nbsp;-&nbsp;&nbsp;
+						<a href="javascript:updateName('Toto');">Toto</a>&nbsp;&nbsp;-&nbsp;&nbsp;
+						<strong>TTL</strong> : 180s&nbsp;&nbsp;-&nbsp;&nbsp;
+						<strong>Trophys</strong> : none
+					</li>
+				</ul>
+			</div>
+		</section>
+  </body>
+</html>

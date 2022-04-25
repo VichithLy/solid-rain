@@ -1,0 +1,60 @@
+# Cache downloaded dependencies and plugins between builds.
+# Not strictly necessary, but speeds up the builds.
+image: maven:3.6.1-jdk-11
+
+cache:
+  key: "$CI_SSH_KEY"
+  paths:
+    # Must be within the repository under test hence we can't use the
+    # default ~/.m2
+    - .m2/repository
+    - .yarn
+variables:
+  # Use the cached directory above.
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+stages: 
+  #- spring
+  - express
+  - client
+
+#spring:
+#  stage: spring
+#  before_script:
+#    - . setup-mvn-proxy.sh
+#    - chmod 400 $CI_SSH_KEY
+#  script:
+#    - cd users
+#    - mvn compile
+#    - mvn test
+#    - mvn clean package
+#    - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1706375/m1if13-2021-tp/users/target/TP1.war gitlabci@192.168.75.123:/opt/tomcat/webapps/tp1.wa
+
+express:
+  image: node:latest
+  stage: express
+  before_script:
+    - . setup-mvn-proxy.sh
+    - chmod 400 $CI_SSH_KEY  
+  script:
+    - cd admin
+    - npm i eslint
+    - npm run build
+    - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1706375/m1if13-2021-tp/api gitlabci@192.168.75.123:/var/www
+  after_script:
+   - cd api 
+   - npm i -g pm2
+   - pm2 start server.js
+
+client:
+  image: node:latest
+  stage: client
+  before_script:
+    - . setup-mvn-proxy.sh
+    - chmod 400 $CI_SSH_KEY   
+  script:
+  - cd client
+  - npm install
+  - npm run build
+  - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY /builds/p1706375/m1if13-2021-tp/client/dist/* gitlabci@192.168.75.123:/var/www/html/client
+  

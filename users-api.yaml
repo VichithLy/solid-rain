@@ -1,0 +1,243 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+tags:
+- name: Authentication
+  description: Authentication API
+- name: User Management
+  description: "Manages users (create, read, udpate, delete)."
+paths:
+  /users/{login}:
+    get:
+      tags:
+      - User Management
+      summary: Get user by login
+      description: Gets a user by his/her login.
+      operationId: getUser
+      parameters:
+      - name: login
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            text/html:
+              schema:
+                type: string
+                default: Page HTML contenant un utilisateur
+        "404":
+          description: User not found
+    put:
+      tags:
+      - User Management
+      summary: Update user's password
+      description: Updates user's password.
+      operationId: updateUser
+      parameters:
+      - name: login
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "400":
+          description: Request failed
+        "404":
+          description: User not found
+        "204":
+          description: Successful operation
+    delete:
+      tags:
+      - User Management
+      summary: Delete user
+      description: Deletes a user.
+      operationId: deleteUser
+      parameters:
+      - name: login
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "404":
+          description: User not found
+        "204":
+          description: Successful operation
+  /users:
+    get:
+      tags:
+      - User Management
+      summary: Get all users
+      description: Gets all users.
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            text/html:
+              schema:
+                type: string
+                default: Page HTML contenant une liste d'utilisateur
+    post:
+      tags:
+      - User Management
+      summary: Create user
+      description: Creates a new user.
+      operationId: createUser_1
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "400":
+          description: Request failed
+        "409":
+          description: User already exists
+        "201":
+          description: Created
+  /login:
+    post:
+      tags:
+      - Authentication
+      summary: Login user
+      description: Logs user with login and password. Create a JWT Token.
+      operationId: login_1
+      parameters:
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "204":
+          description: User logged
+          headers:
+            Authorization:
+              description: Created user URL.
+              style: simple
+              schema:
+                type: string
+            Location:
+              description: User URL.
+              style: simple
+              schema:
+                type: string
+        "404":
+          description: User not found
+        "400":
+          description: Cannot accept request parameters
+        "401":
+          description: Incorrect password
+  /authenticate:
+    get:
+      tags:
+      - Authentication
+      summary: Authenticate user
+      description: Checks user authentication.
+      operationId: authenticate
+      parameters:
+      - name: token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: origin
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Request failed
+        "204":
+          description: User authenticated
+          headers:
+            Location:
+              description: User URL.
+              style: simple
+              schema:
+                type: string
+        "404":
+          description: User not found
+        "401":
+          description: User not authenticated
+  /logout:
+    delete:
+      tags:
+      - Authentication
+      summary: Logout user
+      description: Disconnects user. Invalidates JWT token.
+      operationId: logout
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Origin
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Request failed
+        "204":
+          description: User successfully disconnected
+        "401":
+          description: User not authenticated
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        connected:
+          type: boolean
