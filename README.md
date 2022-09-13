@@ -114,7 +114,7 @@ Partie administrateur :
 - Afficher tous les joueurs
 - Ajouter un joueurs
 - Afficher les paramètres d'un joueur
-- Metter à jour les paramètre d'un joueur
+- Mettre à jour les paramètre d'un joueur
 - Créer une météorite
 - Indiquer quand et par quel joueur une météorite a été récupérée
 - Afficher l'état de la partie
