@@ -8,7 +8,7 @@
 
 <div align="center">
   <p align="center">
-   Jeu multijoueur web mobile avec carte, développé dans le cadre de <a href="http://offre-de-formations.univ-lyon1.fr/%2Fue-16777-143%2Fweb-avance-et-web-mobile.html">M1IF13 - Web avancée, Web Mobile</a>
+   Jeu multijoueur web mobile avec carte, développé dans le cadre de <a href="http://offre-de-formations.univ-lyon1.fr/%2Fue-16777-143%2Fweb-avance-et-web-mobile.html">M1IF13 - Web avancé, Web Mobile</a>
     <br/>
     <br/>
     <a href="https://forge.univ-lyon1.fr/m1if13/m1if13-2021/">Projet 2021</a>
